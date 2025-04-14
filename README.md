@@ -28,10 +28,12 @@ public class MyProgram {
 }
 ```
 
-
+<hr>
+<br>
+<hr>
 
 # Collection :
-
+<hr>
 ## List : 
 The `List` interface in Java is a core part of the Java Collections Framework. It represents an ordered collection (also known as a sequence) that allows duplicate elements. Unlike sets, lists emphasize the order in which elements are inserted and maintained. Here are some key details and aspects of the `List` interface:
 
@@ -104,9 +106,77 @@ Several classes in Java implement the `List` interface, each serving different u
 - **Use in APIs and Code Clarity**:  
   When designing APIs or writing general code, code against the `List` interface rather than a specific implementation. This provides flexibility to change the underlying implementation later without affecting the API or client code.
 
+<hr>
 
+## Queue : 
 
+The `Queue` interface in Java is an integral part of the Collections Framework. It models a collection designed for holding elements prior to processing and typically follows a First-In-First-Out (FIFO) ordering. That said, not all queues strictly adhere to FIFO order; for example, a `PriorityQueue` orders its elements based on their natural ordering or a custom comparator.
 
+---
+
+### Core Characteristics
+
+- **FIFO Behavior (Generally):**  
+  In many queues, the element inserted first is the first one to be removed. However, some implementations—like `PriorityQueue`—organize elements based on priority rather than strictly by insertion time.
+
+- **No Positional Access:**  
+  Unlike lists, queues do not provide access based on indices. Instead, operations revolve around the head (or front) of the queue.
+
+- **Capacity Restrictions:**  
+  Some queue implementations can be bounded (i.e., have a capacity limit). In such cases, insertion methods (`add`/`offer`) will either throw an exception or return a specific status if a new element cannot be added.
+
+---
+
+### Common Methods
+
+The `Queue` interface introduces methods that reflect its unique behavior, with many methods coming in two forms (one that throws exceptions and another that returns a special value):
+
+| **Method**              | **Description**                                                                                                                                                          |
+|-------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `boolean add(E e)`      | Inserts the element into the queue if possible. Throws an exception if the insertion fails (for example, if the queue is bounded and full).                               |
+| `boolean offer(E e)`    | Attempts to insert the element into the queue. It returns `true` upon success or `false` if it cannot be added (especially useful for bounded queues).                |
+| `E remove()`            | Retrieves and removes the head of the queue. Throws a `NoSuchElementException` if the queue is empty.                                                                    |
+| `E poll()`              | Retrieves and removes the head of the queue, or returns `null` if the queue is empty.                                                                                   |
+| `E element()`           | Retrieves, but does not remove, the head of the queue. Throws a `NoSuchElementException` if the queue is empty.                                                           |
+| `E peek()`              | Retrieves, but does not remove, the head of the queue. Returns `null` if the queue is empty.                                                                              |
+
+---
+
+### Common Implementations
+
+Different implementations of the `Queue` interface serve varied needs:
+
+1. **`LinkedList`**  
+   - **Usage:** Implements both the `List` and `Queue` interfaces. Its doubly-linked list structure makes it a general-purpose choice for FIFO operations.  
+   - **Consideration:** Provides flexibility, though it may not be as performant as array-based implementations for certain operations.
+
+2. **`PriorityQueue`**  
+   - **Usage:** A heap-based implementation where elements are ordered based on their natural order or a provided comparator.  
+   - **Consideration:** While it may not follow the strict FIFO discipline, it is perfect for scenarios requiring prioritized processing.
+
+3. **`ArrayDeque`**  
+   - **Usage:** Implements the `Deque` interface, making it usable as both a FIFO queue and a LIFO stack.  
+   - **Consideration:** Typically offers better performance than `LinkedList` when used as a queue and is a good choice for non-threaded contexts.
+
+4. **Concurrent Queues:**  
+   Java provides several thread-safe queue implementations under the `java.util.concurrent` package:
+   - **`ConcurrentLinkedQueue`:** An unbounded thread-safe FIFO queue based on linked nodes.
+   - **`LinkedBlockingQueue` / `ArrayBlockingQueue`:** Bounded queues designed to be used in producer-consumer scenarios where blocking operations (waiting for the queue to become non-empty or non-full) are desired.
+
+---
+
+### Practical Considerations
+
+- **Choosing the Right Implementation:**  
+  If you need a simple FIFO structure without any ordering aside from insertion order, a `LinkedList` or `ArrayDeque` is usually sufficient. For scenarios where task prioritization is key, `PriorityQueue` is ideal, while concurrent situations might call for implementations like `ConcurrentLinkedQueue`.
+
+- **Exception vs. Special Value Methods:**  
+  Methods like `add()` and `remove()` throw exceptions when operations fail, whereas `offer()`, `poll()`, and `peek()` return a special value (`false` or `null`). Deciding which to use depends on how you prefer to handle error conditions.
+
+- **Capacity Limitations:**  
+  For bounded queues, it’s important to understand what happens on insertion failure. For example, `ArrayBlockingQueue` has a fixed capacity; if you try to add more elements than it can hold, `offer()` will return `false`.
+
+  <hr>
 
  ## Set : 
 The `Set` interface in Java is a fundamental component of the Collections Framework that represents a collection of unique elements. Unlike a `List`, which can contain duplicates and maintains an order based on insertion or explicit indexing, a `Set` ensures that no duplicate elements are stored. This unique characteristic makes it ideal for situations where you need to enforce uniqueness without any concern for the element ordering.
