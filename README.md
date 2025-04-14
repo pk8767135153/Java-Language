@@ -179,3 +179,87 @@ Java provides several concrete implementations of the `Set` interface, each opti
 
 The `Set` interface is incredibly useful when you need to ensure element uniqueness, and understanding its different implementations can help you make informed decisions based on your performance and ordering requirements.
  
+
+
+
+
+
+
+
+
+
+
+
+## Map :
+The `Map` interface in Java is an essential component of the Collections Framework that represents a mapping between keys and values. Unlike other collection types, a map does not extend the `Collection` interface because it focuses on key-value pairs instead of a simple group of elements. Each key maps to a single value, meaning duplicate keys are not allowed (though different keys can map to the same value). This characteristic makes maps perfect for scenarios where you need fast lookups by a unique key.
+
+### Core Characteristics
+
+- **Key-Value Association:**  
+  A `Map` stores elements as key-value pairs. You use the key to retrieve its associated value.
+  
+- **Unique Keys:**  
+  Each key in a map is unique. If you attempt to put a key that already exists, the old value is replaced with the new one.
+  
+- **No Inherent Order:**  
+  The base `Map` interface does not specify any ordering of keys or values. However, some implementations do offer predictable ordering.
+  
+- **Not a True Collection:**  
+  Even though it's part of the Collections Framework, `Map` is distinct because it deals with associations rather than individual elements.
+
+### Common Methods
+
+Below is a table outlining some of the commonly used methods of the `Map` interface:
+
+| **Method**                                 | **Description**                                                                                                         |
+|--------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
+| `V put(K key, V value)`                    | Associates the specified value with the specified key in the map. If the key already exists, the old value is replaced.  |
+| `V get(Object key)`                        | Returns the value to which the specified key is mapped, or `null` if the map contains no mapping for the key.             |
+| `V remove(Object key)`                     | Removes the mapping for a key if it is present and returns the value that was associated with that key.                  |
+| `boolean containsKey(Object key)`          | Checks if the map contains a mapping for the specified key.                                                             |
+| `boolean containsValue(Object value)`      | Checks if the map maps one or more keys to the specified value.                                                         |
+| `Set<K> keySet()`                          | Returns a set view of the keys contained in the map.                                                                    |
+| `Collection<V> values()`                   | Returns a collection view of the values contained in the map.                                                           |
+| `Set<Map.Entry<K,V>> entrySet()`            | Returns a set view of the key-value mappings contained in the map.                                                      |
+| `void putAll(Map<? extends K, ? extends V> m)`| Copies all of the mappings from the specified map to this map.                                                             |
+| `void clear()`                             | Removes all of the mappings from the map.                                                                               |
+| `int size()`                               | Returns the number of key-value mappings in the map.                                                                    |
+| `boolean isEmpty()`                        | Returns `true` if the map contains no key-value mappings.                                                               |
+
+### Common Implementations
+
+Java offers several concrete implementations of the `Map` interface, each optimized for specific needs:
+
+1. **`HashMap`**  
+   - **Description:** Provides constant-time performance for get and put operations on the assumption that the hash function disperses elements properly.  
+   - **Ordering:** No predictable iteration order.
+   - **Use Case:** General-purpose map where ordering is not required.
+
+2. **`LinkedHashMap`**  
+   - **Description:** Extends `HashMap` and maintains a doubly-linked list running through all of its entries, which defines the iteration order (typically insertion order).  
+   - **Use Case:** When you need predictable iteration order along with map functionality.
+
+3. **`TreeMap`**  
+   - **Description:** Implements the `SortedMap` interface using a Red-Black tree. Keys are sorted either according to their natural ordering or by a `Comparator` provided at map creation.  
+   - **Requirement:** Keys must be `Comparable` or you need to supply a comparator.
+   - **Use Case:** When a map needs to be maintained in a sorted order.
+
+4. **`Hashtable`**  
+   - **Description:** A legacy class that is synchronized. It does not allow `null` for keys or values.  
+   - **Use Case:** When thread safety is required in legacy applications, though generally replaced by more modern alternatives.
+
+5. **`ConcurrentHashMap`**  
+   - **Description:** Part of the `java.util.concurrent` package, providing a scalable and thread-safe implementation of a hash map.  
+   - **Use Case:** High concurrency scenarios where thread safety is essential without the overhead of synchronizing every operation.
+
+### Practical Considerations
+
+- **Choosing the Right Implementation:**  
+  Think about factors like ordering, thread-safety, and performance when selecting an implementation. For instance, if you don't need ordering, `HashMap` is usually best; if you need sorting, then `TreeMap` is appropriate.
+
+- **Thread Safety:**  
+  If multiple threads might modify a map concurrently, consider using thread-safe variants like `ConcurrentHashMap` or synchronizing access to your `Map`.
+
+- **Null Handling:**  
+  Be aware of how different implementations handle `null` keys and values. For example, `HashMap` allows one null key and multiple null values, whereas `Hashtable` doesn’t allow any.
+ 
